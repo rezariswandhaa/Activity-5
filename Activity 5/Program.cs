@@ -109,10 +109,15 @@ namespace Double_Linked_List_Algorithm
             current.next.prev = previous;
             return true;
         }
+       
+        public bool listEmpty()
+        {
+            if (START == null)
+                return true;
+            else
+                return false;
+        }
 
-        
-
-        
         
 
         static void Main(string[] args)
