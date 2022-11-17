@@ -4,50 +4,99 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Activity_5
+namespace Double_Linked_List_Algorithm
 {
-    internal class Program
+    class Node
     {
-        class Node
-        {
-            /*Node class represent the node of doubly linked list.
-             * It consist of the information part and link to
-             * its succeeding and preceeding node
-             * int terms of next and previous nodes.*/
-            public int rollNumber;
-            public string name;
-            public Node next;/*points to the succeeding node*/
-            public Node prev;/*points to the preceeding node*/
-        }
-        class DoubleLinkedList
-        {
-            Node START;
-            public DoubleLinkedList()
-            {
-                START = null;
-            }
-            public void addNode()/* Add a new code */
-            {
-                int rollNo;
-                string nm;
-                Console.Write("\nEnter the roll number of the student: ");
-                rollNo = Convert.ToInt32(Console.ReadLine());
-                Console.Write("\nEnter the name of student: ");
-                nm = Console.ReadLine();
-                Node newnode = new Node();
-                newnode.rollNumber = rollNo;
-                newnode.name = nm;
-                /*Checks if the list is empty*/
-                if (START == null || rollNo <= START.rollNumber)
-                {
+        /* Node class represents the node of doubly linked list.
+         * It consists of the information part and links to
+         * its succeeding and preceeding nodes
+         * in terms of next and previous nodes,
+         */
+        public int rollNumber;
+        public string name;
+        public Node next;
+        public Node prev;
+    }
 
+    class DoubleLinkedList
+    {
+        Node START;
+        public DoubleLinkedList()
+        {
+            START = null;
+        }
+        public void addNode()
+        {
+            int rollNo;
+            string nm;
+            Console.Write("\nEnter the roll number of the student: ");
+            rollNo = Convert.ToInt32(Console.ReadLine());
+            Console.Write("\nEnter the name of the student: ");
+            nm = (Console.ReadLine());
+            Node newnode = new Node();
+            newnode.rollNumber = rollNo;
+            newnode.name = nm;
+
+            if (START == null || rollNo <= START.rollNumber)
+            {
+                if ((START != null) && (rollNo == START.rollNumber))
+                {
+                    Console.WriteLine("\nDuplicate roll numbers not allowed");
+                    return;
+                }
+                newnode.next = START;
+                if (START != null)
+                    START.prev = newnode;
+                newnode.prev = null;
+                START = newnode;
+                return;
+            }
+
+            Node previous, current;
+            for (current = previous = START; current != null &&
+                rollNo >= current.rollNumber; previous = current, current =
+                current.next)
+            {
+                if (rollNo == current.rollNumber)
+                {
+                    Console.WriteLine("\nDuplicate roll numbers not allowed");
+                    return;
                 }
             }
+
+            newnode.next = current;
+            newnode.prev = previous;
+
+            if (current == null)
+            {
+                newnode.next = null;
+                previous.next = newnode;
+                return;
+            }
+            current.prev = newnode;
+            previous.next = newnode;
         }
 
+        public bool Search(int rollNo, ref Node previous, ref Node current)
+        {
+            for (previous = current =START; current != null &&
+                rollNo != current.rollNumber; previous = current,
+                current = current.next) { }
+            return (current != null);
+        }
+
+        
+
+        
+
+        
+        
 
         static void Main(string[] args)
         {
+            
+            
         }
     }
 }
